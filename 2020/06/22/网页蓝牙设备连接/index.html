@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="刘敦帅">
+    
+    
+    
+    
+    
+    
+    <title>网页蓝牙设备连接 | 刘敦帅 の 博客</title>
+    <!-- inject:style -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <!-- endinject -->
+    <style>
+        .cube-loading {
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url('/images/lg/loading.gif') no-repeat center center;
+            background-color: rgba(0,0,0,.7);
+        }
+
+        .cube-loading.out {
+            display: none;
+        }
+
+        .cube-loading:before {
+            display: block;
+            content: '加载中';
+            position: relative;
+            width: 100%;
+            top: 50%;
+            right: -50%;
+            color: #fff;
+        }
+
+        @media(max-width: 768px) {
+            .cube-loading:before {
+                font-size: 1.2em;
+                transform: translate(-24px,20px);
+                -webkit-transform: translate(-24px,20px);
+                -o-transform: translate(-24px,20px);
+                -ms-transform: translate(-24px,20px);
+            }
+        }
+
+        @media(min-width: 768px) {
+            .cube-loading:before {
+
+            }
+        }
+    </style>
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+<div class="cube-body">
+    <nav id="cube-top-memu" class="cube-menu">
+    <ul class="cube-menu-collapse">
+        
+        <li>
+            <i class="cube-icon cube-icon-home" aria-hidden="true"></i>
+            <a href="/">首页</a>
+        </li>
+        
+        <li>
+            <i class="cube-icon cube-icon-archive" aria-hidden="true"></i>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <i class="cube-icon cube-icon-categories" aria-hidden="true"></i>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <i class="cube-icon cube-icon-tags" aria-hidden="true"></i>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <i class="cube-icon cube-icon-about" aria-hidden="true"></i>
+            <a href="/about-me">关于我</a>
+        </li>
+        
+    </ul>
+</nav>
+<nav class="cube-side-menu" id="cube-side-menu">
+    <ul class="cube-menu-list">
+        
+        <li>
+            <a class="lrc-control">开启歌词</a>
+        </li>
+        
+        <li>
+            <a class="scroll-to-top">回到顶部</a>
+        </li>
+    </ul>
+</nav>
+    <header class="cube-header" id="cube-header">
+    <img src=" https://s1.ax1x.com/2020/06/10/t7KKOA.jpg " alt="头部背景图片">
+    
+    <div class="cube-type">
+        <span class="cube-typed-title">刘敦帅 の 博客</span>
+        <span class="cube-typed-cursor">|</span>
+    </div>
+    
+</header>
+
+    <style>
+        nav.cube-menu:before {
+            content: '';
+            visibility: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 44px;
+        
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+        
+            z-index: -1;
+            background-image: url('https://s1.ax1x.com/2020/06/10/t7KKOA.jpg');
+            background-repeat: no-repeat;
+            background-position: center -356px;
+            background-size: cover;
+            background-color: transparent;
+        }
+
+        header.cube-background.cube-header-background {
+            visibility: hidden;
+            background-image: url('https://s1.ax1x.com/2020/06/10/t7KKOA.jpg');
+            background-position: center -400px;
+        }
+    </style>
+    <header class="cube-background cube-header-background">
+        
+        <div class="cube-type">
+            <span class="cube-typed-title">刘敦帅 の 博客</span>
+            <span class="cube-typed-cursor">|</span>
+        </div>
+        
+    </header>
+    <div class="load-header-background"></div>
+    <script>
+        (function (window) {
+
+            window.headerModule = {}
+            window.headerModule.image = {
+                width: '2000',
+                height: '1414'
+            }
+
+        })(window)
+    </script>
+    
+    <div class="cube-content">
+        <div class="cube-left">
+            <div class="cube-article">
+    <h1 class="title">网页蓝牙设备连接</h1>
+    
+    <div class="cube-article-header">
+        <div class="cube-article-date">
+            <i class="cube-icon cube-icon-date" aria-hidden="true"></i>
+            <!-- moment.js对象 -->
+            2020-06-22
+        </div>
+        <div class="cube-article-tags">
+    <i class="cube-icon cube-icon-tag" aria-hidden="true"></i>
+    
+</div>
+    </div>
+    
+    <div class="cube-article-content cube-markdown">
+        
+        <h2 id="知识储备"><a href="#知识储备" class="headerlink" title="知识储备"></a>知识储备</h2><p>Micro:bit是由英国BBC公司(对，你没有看错，就是那个被拍纪录片耽误的科技公司BBC)推出的面向青少年编程教育的微型计算机，别看它身材不大，但麻雀虽小五脏俱全，一块小板子上集成了加速度传感器，磁力传感器，两个可编程按钮，25个单色led，蓝牙等常用传感器设备，而尺寸只有信用卡的一半大小，采用micro usb口供电，可外接电池盒，在底部还有多个环孔连接器，可用于控制外接设备。</p>
+<hr>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="一、micro-bit在电脑上的连接"><a href="#一、micro-bit在电脑上的连接" class="headerlink" title="一、micro:bit在电脑上的连接"></a><strong>一、micro:bit在电脑上的连接</strong></h3><ol>
+<li><p>先将板子通过usb口连接到电脑<img src="http://5wuybiubiubiu.icu/images/a.jpg" alt="img"></p>
+</li>
+<li><p>在<a href="https://makecode.microbit.org/v0/89975-20684-84568-20127" target="_blank" rel="noopener">官网</a>上下载测试程序</p>
+<p>下载程序完成后，将程序拖入测试板所在的盘内，此时会发现板子上出现” Hi ! “的标识，则表示成功<img src="http://5wuybiubiubiu.icu/images/b.png" alt="img"></p>
+</li>
+</ol>
+<p><strong>二、蓝牙的连接</strong></p>
+<ol>
+<li><p>使用Visual Studio Code软件创建新的html文件，在文件中输入以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            var selected_device;           &#x2F;&#x2F; 保存用户选择的蓝牙设备</span><br><span class="line">            var connected_server;           &#x2F;&#x2F;在第二课基础上添加的变量，保存用户连接的蓝牙设备</span><br><span class="line">            var connected&#x3D;false;            &#x2F;&#x2F;在第三课基础上添加的变量，保存电脑蓝牙的当前连接设备</span><br><span class="line">            function discoverDevices()</span><br><span class="line">            &#123;</span><br><span class="line">                console.log(&quot;discoverDevices&quot;);     &#x2F;&#x2F;consol.log 控制台打印输出</span><br><span class="line">                var options &#x3D; &#123;acceptAllDevices:true&#125;        &#x2F;&#x2F;发现所有周边蓝牙设备</span><br><span class="line">                navigator.bluetooth.requestDevice(options)     &#x2F;&#x2F;Navigator对象，包含有关游览器的信息</span><br><span class="line">                .then(device &#x3D;&gt; &#123;</span><br><span class="line">                    console.log(&#39;&gt; Name:        &#39; + device.name);</span><br><span class="line">                    console.log(&#39;&gt; Id:          &#39; + device.id);</span><br><span class="line">                    console.log(&#39;&gt; Connected:   &#39; + device.gatt.connected);</span><br><span class="line">                    selected_device &#x3D; device;</span><br><span class="line">                    console.log(selected_device);</span><br><span class="line">                    connect();  </span><br><span class="line">                &#125;)</span><br><span class="line">                .catch(error &#x3D;&gt;&#123;</span><br><span class="line">                    alert(&#39;ERROR:&#39; +error);</span><br><span class="line">                    console.log(&#39;ERROR:&#39; +error);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            function connect()</span><br><span class="line">            &#123;</span><br><span class="line">                console.log(&quot;connecting&quot;);</span><br><span class="line">                selected_device.gatt.connect()</span><br><span class="line">                .then(</span><br><span class="line">                    function(server)                            &#x2F;&#x2F;表示连接成功</span><br><span class="line">                    &#123;</span><br><span class="line">                        console.log(&quot;Connected to&quot; + server.device.id);</span><br><span class="line">                        console.log(&quot;Connected&#x3D;&quot; + server.connected);</span><br><span class="line">                        connected_server &#x3D; server;</span><br><span class="line">                        setConnectedStatus(true);</span><br><span class="line"></span><br><span class="line">                    &#125;,</span><br><span class="line">                    function(error)                              &#x2F;&#x2F;表示连接失败</span><br><span class="line">                    &#123;</span><br><span class="line">                        console.log(&quot;ERROR:could not connct-&quot; + error);</span><br><span class="line">                        alert(&quot;ERROR:could not connct-&quot; + error);</span><br><span class="line">                        setConnectedStatus(false);</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">            &#125;</span><br><span class="line">            function setConnectedStatus(status)</span><br><span class="line">            &#123;</span><br><span class="line">                connected&#x3D;status;</span><br><span class="line">                document.getElementById(&#39;status_connected&#39;).innerHTML&#x3D;status;</span><br><span class="line">                if(status&#x3D;&#x3D;true)</span><br><span class="line">                &#123;</span><br><span class="line">                    document.getElementById(&#39;btn_scan&#39;).innerHTML&#x3D;&quot;Disconnect&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">                else</span><br><span class="line">                &#123;</span><br><span class="line">                    document.getElementById(&#39;btn_scan&#39;).innerHTML&#x3D;&quot;Discover Devices&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &lt;&#x2F;script&gt;</span><br><span class="line">    &lt;&#x2F;head&gt;</span><br><span class="line">    &lt;body&gt;       </span><br><span class="line">        &lt;h2&gt;</span><br><span class="line">            Status  &lt;!-- 显示蓝牙状态--&gt;</span><br><span class="line">        &lt;&#x2F;h2&gt;</span><br><span class="line">        &lt;table border&#x3D;&quot;1&quot;&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td&gt;    &lt;b&gt;Connected&lt;&#x2F;b&gt;    &lt;&#x2F;td&gt;</span><br><span class="line">            &lt;&#x2F;tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td id&#x3D;&quot;status_connected&quot;&gt;False&lt;&#x2F;td&gt;</span><br><span class="line">            &lt;&#x2F;tr&gt;</span><br><span class="line">        &lt;&#x2F;table&gt; </span><br><span class="line">        &lt;h2&gt;Device Discovery &lt;&#x2F;h2&gt;     &lt;!-- 扫描&#x2F;发现蓝牙设备 --&gt;</span><br><span class="line">        &lt;button id&#x3D;&quot;btn_scan&quot; onclick&#x3D;&quot;discoverDevices()&quot;&gt;</span><br><span class="line">            Start scan</span><br><span class="line">        &lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保存成功之后，使用Google Chrome打开文件，出现以下界面<img src="http://5wuybiubiubiu.icu/images/c.png" alt="img"></p>
+</li>
+<li><p>点击Start scan按钮，找到自己的设备点击连接配对<img src="http://5wuybiubiubiu.icu/images/d.png" alt="img"></p>
+</li>
+<li><p>配对成功，连接成功后，Connected为true，板子显示从D变为C。<img src="http://5wuybiubiubiu.icu/images/e.jpg" alt="img"></p>
+</li>
+</ol>
+<p>到此就结束了项目二的第一项功能。</p>
+
+    </div>
+</div>
+
+<div class="cube-article-nav">
+    <ul>
+        
+        <li class="prev">
+            <a href="/2020/06/22/%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/">
+                <i class="cube-icon cube-prev" aria-hidden="true"></i>
+                读写特性
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2020/05/26/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAHexo/">
+                从零开始搭建Hexo
+                <i class="cube-icon cube-next" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+<!-- TODO 根据theme.comment的内容进行入口选择 -->
+
+    <!-- 因为gitment里面也有gitment-container，所以这里就改为gitment-comment -->
+<div class="gitment-comment">
+    <div id="container"></div>
+</div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id default is location.href
+        owner: '29-mx',
+        repo: 'comments',
+        oauth: {
+            client_id: '2a496b79cb241684eaf2',
+            client_secret: '4f46b83579d6ac61dd46307fd591808fb7ae9db3',
+        },
+    })
+    gitment.render('container')
+</script>
+    
+
+
+        </div>
+        <div class="cube-right">
+            
+
+<div class="cube-search cube-sidebar" id="cube-search">
+    <div class="search-container">
+        <input type="text" placeholder="搜索" class="cube-search-input" id="cube-search-input">
+        <i class="cube-icon cube-icon-search cube-search-submit" aria-hidden="true"></i>
+    </div>
+    <!-- TODO 通过给window赋一个全局变量，通过脚本赋值 -->
+</div>
+<script>
+    (function (window) {
+        'use strict';
+        window.searchModule = {}
+        window.searchModule.JSONUrl = '/content.json'
+        window.searchModule.rootUrl = '/'
+    })(window)
+</script>
+<div class="cube-search-form">
+    <div class="cube-search-control">
+        <input type="text" placeholder="搜索" class="search-input">
+        <a class="close-button">
+            <i class="cube-icon cube-close" aria-hidden="true"></i>
+        </a>
+    </div>
+    <div class="cube-search-result"></div>
+</div>
+
+
+<div class="cube-author cube-sidebar" id="cube-author">
+    
+    
+    <span>刘敦帅</span>
+    
+    
+    <div class="count">
+        <a class="count articles"><span>8</span>文章</a>
+        <a class="count tags"><span>0</span>标签</a>
+        <a class="count categories"><span>0</span>分类</a>
+    </div>
+</div>
+
+
+
+<div class="cube-music cube-sidebar" id="cube-music">
+    <div class="cube-player aplayer" id="cube-player"></div>
+</div>
+<script>
+    (function (window) {
+        window.musicModule = {}
+        window.musicModule.musicConfig = '{"narrow":false,"autoplay":false,"showlrc":3,"theme":"#b7daff","mutex":true,"mode":"circulation","preload":"auto","listmaxheight":"513px","music":[{"title":"Dear friends","author":"TRIPLANE","url":"http://cube-1252774894.cosgz.myqcloud.com/music/source/TRIPLANE - Dear friends.mp3","lrc":"http://cube-1252774894.cosgz.myqcloud.com/music/lrc/Dear friends - TRIPLANE.lrc","pic":"http://cube-1252774894.cosgz.myqcloud.com/music/image/TRIPLANE - Dear friends.jpg"},{"title":"Butter-Fly","author":"和田光司","url":"http://cube-1252774894.cosgz.myqcloud.com/music/source/和田光司 - Butter-Fly (ピアノヴァージョン).mp3","lrc":"http://cube-1252774894.cosgz.myqcloud.com/music/lrc/Butter-Fly (ピアノヴァージョン) - 和田光司.lrc","pic":"http://cube-1252774894.cosgz.myqcloud.com/music/image/和田光司 - Butter-Fly (ピアノヴァージョン).jpg"},{"title":"宵闇花火","author":"葉月ゆら","url":"http://cube-1252774894.cosgz.myqcloud.com/music/source/葉月ゆら - 宵闇花火.mp3","lrc":"http://cube-1252774894.cosgz.myqcloud.com/music/lrc/宵闇花火 - 葉月ゆら.lrc","pic":"http://cube-1252774894.cosgz.myqcloud.com/music/image/葉月ゆら - 宵闇花火.jpg"}]}'
+        window.musicModule.lrcConfig = {
+            open: '开启歌词',
+            close: '关闭歌词'
+        }
+    })(window)
+</script>
+
+
+
+<div class="cube-recent-posts cube-sidebar" id="cube-recent-posts">
+    <div class="title">
+        <a>近期文章</a>
+    </div>
+    <ul class="list">
+        
+        
+        <li>
+            <!-- TODO 如果文章要显示图片，那么在front-matter上添加preview属性(url or path) -->
+            
+            <div class="normal">
+                <p class="index first">
+                    <span>1</span>
+                </p>
+                <p class="title">
+                    <a href="/2020/06/23/%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/" title="启用通知">启用通知</a>
+                </p>
+            </div>
+            
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>2</span>
+                </p>
+                <p class="title">
+                    <a href="/2020/06/22/%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87/" title="蓝牙设备">蓝牙设备</a>
+                </p>
+            </div>
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>3</span>
+                </p>
+                <p class="title">
+                    <a href="/2020/06/22/%E6%9C%8D%E5%8A%A1%E7%89%B9%E6%80%A7/" title="服务特性">服务特性</a>
+                </p>
+            </div>
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>4</span>
+                </p>
+                <p class="title">
+                    <a href="/2020/06/22/%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/" title="读写特性">读写特性</a>
+                </p>
+            </div>
+        </li>
+        
+        
+        
+        <li>
+            <div class="normal">
+                <p class="index">
+                    <span>5</span>
+                </p>
+                <p class="title">
+                    <a href="/2020/06/22/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5/" title="网页蓝牙设备连接">网页蓝牙设备连接</a>
+                </p>
+            </div>
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+
+
+
+
+
+<div class="cube-links cube-sidebar" id="cube-links">
+    <div class="title">
+        <a>个人链接</a>
+    </div>
+    <ul class="list">
+        
+        <li>
+            
+            
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/links/GitHub.png">
+            
+            <a href="https://github.com/ZEROKISEKI" target="_blank">GitHub</a>
+        </li>
+        
+        <li>
+            
+            
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/links/Coding.png">
+            
+            <a href="https://coding.net/u/SORA1" target="_blank">Coding</a>
+        </li>
+        
+        <li>
+            
+            
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/links/SF.png">
+            
+            <a href="https://segmentfault.com/u/aonosora" target="_blank">SF社区</a>
+        </li>
+        
+        <li>
+            
+            
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/links/开发者头条.png">
+            
+            <a href="https://toutiao.io/u/148070" target="_blank">开发者头条</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+<div class="cube-friend-links cube-sidebar" id="cube-friend-links">
+    <div class="title">
+        <a>友情链接</a>
+    </div>
+    <ul class="list">
+        
+        <li>
+            <!-- TODO change avatar.png to friend.png-->
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/friend_links/micblo.png">
+            <a href="https://blog.micblo.com/" target="_blank">罗大佬</a>
+        </li>
+        
+        <li>
+            <!-- TODO change avatar.png to friend.png-->
+            <img src="http://cube-1252774894.cosgz.myqcloud.com/friend_links/DIYgod.jpg">
+            <a href="https://www.anotherhome.net/" target="_blank">DIYgod</a>
+        </li>
+        
+        <li>
+            <!-- TODO change avatar.png to friend.png-->
+            <img src="/images/friend_links.jpg ">
+            <a href="https://aonosora.com/" target="_blank">咪西西の部落格</a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+    </div>
+</div>
+<footer class="cube-footer">
+    
+© 2020 刘敦帅
+
+<br>
+Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+</footer>
+<!-- inject:script -->
+<script src="/js/script.js"></script>
+<!-- endinject -->
+<div class="cube-loading out"></div>
+</body>
+</html>
